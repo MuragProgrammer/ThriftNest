@@ -1,0 +1,24 @@
+.nav-label {
+  font-family: "BeatriceDeckTrial-Medium", sans-serif;
+  font-size: 14px;
+  color: #000;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  line-height: 1.3;
+}
+.navbar{
+  height: 100px;
+}
+
+.new-collection {
+  font-weight: bold;
+}
+
+.men-women-kids {
+  font-weight: normal;
+}
+
+.nav-icon {
+  width: 24px;
+  height: 24px;
+}
