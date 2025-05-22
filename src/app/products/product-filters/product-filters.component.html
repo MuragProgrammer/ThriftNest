@@ -9,9 +9,12 @@
     </select>
   </div>
 
-  <div class="filter-group">
+  <div class="filter-group vertical-range">
     <label>Price Range</label>
-    <input type="range" min="0" max="1500" [(ngModel)]="priceRange" (change)="onFilterChange()" />
-    <div>Up to ₱ {{ priceRange }}</div>
+    <div class="range-wrapper">
+      <input type="range" min="0" max="1500" step="10" [(ngModel)]="priceRange" (change)="onFilterChange()" orient="vertical" />
+      <div class="range-value">Up to ₱ {{ priceRange }}</div>
+    </div>
   </div>
+
 </div>

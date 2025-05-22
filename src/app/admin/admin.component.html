@@ -14,6 +14,7 @@
             <button class="btn-submit" (click)="openProductModal()">+ Add Product</button>
 
             <!-- Product Modal -->
+        <div class="table-responsive">
             <div *ngIf="showProductModal" class="modal-overlay">
             <div class="modal-content">
                 <h3>Add New Product</h3>
@@ -35,7 +36,7 @@
                 </div>
                 <div class="modal-actions">
                 <button class="btn-submit" (click)="uploadImageAndAddProduct()">Add</button>
-                <button class="btn-link" (click)="closeProductModal()">Cancel</button>
+                <button class="btn btn-link" (click)="closeProductModal()">Cancel</button>
                 </div>
             </div>
             </div>
@@ -58,11 +59,13 @@
             </tbody>
             </table>
         </div>
+        </div>
     </div>
 
     <!-- USERS -->
     <section class="admin-section">
         <h3>Users</h3>
+        <div class="table-responsive">
         <table class="table">
         <thead>
             <tr>
@@ -83,71 +86,76 @@
             </tr>
         </tbody>
         </table>
+        </div>
     </section>
 
     <!-- ORDERS -->
     <section class="admin-section">
     <h3>Orders</h3>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Order ID</th>
-            <th>Items</th>
-            <th>User ID</th>
-            <th>Email</th>
-            <th>Shipping To</th>
-            <th>Total</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let order of orders">
-            <td>{{ order.id }}</td>
-            <td>
-            <span class="items-summary" (click)="toggleExpand(order.id!)" style="cursor:pointer; user-select:none;">
-                Items: {{ getTotalItems(order.items) }}
-                <span class="arrow-icon">{{ expandedOrderIds.has(order.id!) ? '▲' : '▼' }}</span>
-            </span>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Items</th>
+                    <th>Full Name</th>
+                    <th>User ID</th>
+                    <th>Email</th>
+                    <th>Shipping To</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let order of orders">
+                    <td>{{ order.id }}</td>
+                    <td>
+                    <span class="items-summary" (click)="toggleExpand(order.id!)" style="cursor:pointer; user-select:none;">
+                        Items: {{ getTotalItems(order.items) }}
+                        <span class="arrow-icon">{{ expandedOrderIds.has(order.id!) ? '▲' : '▼' }}</span>
+                    </span>
 
-            <div *ngIf="expandedOrderIds.has(order.id!)" class="items-details" style="margin-top:8px;">
-                <ul style="padding-left: 18px; margin: 0;">
-                <li *ngFor="let item of order.items">
-                    {{ item.productName }} (x{{ item.quantity }})
-                </li>
-                </ul>
-            </div>
-            </td>
-            <td>{{ order.userId }}</td>
-            <td>{{ order.contactEmail }}</td>
-            <td>{{ order.shipping.fullname }}, {{ order.shipping.city }}</td>
-            <td>₱{{ order.totalAmount }}</td>
-            <td>{{ order.status }}</td>
-            <td>
-        <ng-container [ngSwitch]="order.status">
-            <ng-container *ngSwitchCase="'pending'">
-            <button class="btn btn-outline-dark" (click)="updateOrderStatus(order.id!, 'shipped')">Ship</button>
-            <button class="btn btn-outline-dark" (click)="updateOrderStatus(order.id!, 'cancelled')">Cancel</button>
-            <button class="btn btn-danger" (click)="deleteOrder(order.id!)">Delete</button>
-            </ng-container>
+                    <div *ngIf="expandedOrderIds.has(order.id!)" class="items-details" style="margin-top:8px;">
+                        <ul style="padding-left: 18px; margin: 0;">
+                        <li *ngFor="let item of order.items">
+                            {{ item.productName }} (x{{ item.quantity }})
+                        </li>
+                        </ul>
+                    </div>
+                    </td>
+                    <td>{{ order.userId }}</td>
+                    <td>{{ order.contactEmail }}</td>
+                    <td>{{ order.shipping.fullname }}</td>
+                    <td>{{ order.shipping.address }} {{ order.shipping.city }}, {{ order.shipping.state }}, {{ order.shipping.country }}</td>
+                    <td>₱{{ order.totalAmount }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>
+                <ng-container [ngSwitch]="order.status">
+                    <ng-container *ngSwitchCase="'pending'">
+                    <button class="btn btn-outline-dark" (click)="updateOrderStatus(order.id!, 'shipped')">Ship</button>
+                    <button class="btn btn-outline-dark" (click)="updateOrderStatus(order.id!, 'cancelled')">Cancel</button>
+                    <button class="btn btn-danger" (click)="deleteOrder(order.id!)">Delete</button>
+                    </ng-container>
 
-            <ng-container *ngSwitchCase="'shipped'">
-            <span>Waiting for user to receive item</span>
-            <button class="btn btn-success ms-2" (click)="updateOrderStatus(order.id!, 'delivered')">Complete</button>
-            </ng-container>
+                    <ng-container *ngSwitchCase="'shipped'">
+                    <span>Waiting for user to receive item</span>
+                    <button class="btn btn-success ms-2" (click)="updateOrderStatus(order.id!, 'delivered')">Complete</button>
+                    </ng-container>
 
-            <ng-container *ngSwitchCase="'delivered'">
-            <span>Order Delivered</span>
-            </ng-container>
+                    <ng-container *ngSwitchCase="'delivered'">
+                    <span>Order Delivered</span>
+                    </ng-container>
 
-            <ng-container *ngSwitchCase="'cancelled'">
-            <span class="text-danger">Order Cancelled</span>
-            </ng-container>
-        </ng-container>
-        </td>
-        </tr>
-        </tbody>
-    </table>
+                    <ng-container *ngSwitchCase="'cancelled'">
+                    <span class="text-danger">Order Cancelled</span>
+                    </ng-container>
+                </ng-container>
+                </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
 
 </div>

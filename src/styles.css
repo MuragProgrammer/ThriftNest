@@ -36,6 +36,25 @@ body, html {
   min-height: 100vh;
   background-color: var(--white);
 }
+.mobile-sidebar {
+  display: none;
+}
+
+.mobile-sidebar.show {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  z-index: 1050;
+  transition: transform 0.3s ease-in-out;
+}
+
+@media (min-width: 992px) {
+  .mobile-sidebar {
+    display: none !important;
+  }
+}
 
 /* Card Container */
 .login-content,
@@ -249,7 +268,7 @@ body, html {
   .login-content,
   .register-content {
     padding: 1.5rem;
-    max-width: 100%;
+    max-width: 380px;
   }
 
   .logo {
@@ -281,6 +300,7 @@ body, html {
   .login-content,
   .register-content {
     padding: 1rem;
+    max-width: 350px;
   }
 
   .logo {

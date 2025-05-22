@@ -1,32 +1,63 @@
-﻿<nav class="navbar navbar-expand px-3 container position-relative" *ngIf="user">
-  <div class="navbar-nav w-100 d-flex align-items-center justify-content-between">
+﻿<nav class="navbar navbar-expand-lg px-3 container-fluid position-relative bg-light" *ngIf="user">
+  <!-- Brand / Logo -->
+  <a class="navbar-brand d-lg-none" href="#">
+    <img class="logo" src="assets/Logo.png" alt="logo" />
+  </a>
 
-    <!-- Left side nav links -->
+  <!-- Toggler for small screens -->
+  <button
+    class="navbar-toggler"
+    type="button"
+    (click)="isCollapsed = !isCollapsed"
+    aria-controls="sidebarMenu"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Horizontal Nav (Desktop) -->
+  <div class="collapse navbar-collapse d-none d-lg-flex justify-content-between align-items-center w-100">
+    <!-- Left -->
     <div class="d-flex align-items-center gap-3">
       <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
       <a class="nav-item nav-link" routerLink="/products">Products</a>
-      <a *ngIf="user.role === 'admin'" class="nav-item nav-link d-flex align-items-center gap-1" routerLink="/admin" routerLinkActive="active">
-        <i class="fas fa-cogs"></i>
-        Admin Panel
+      <a *ngIf="user && user.role === 'admin'" class="nav-item nav-link d-flex align-items-center gap-1" routerLink="/admin" routerLinkActive="active">
+        <i class="fas fa-cogs"></i> Admin Panel
       </a>
     </div>
 
-    <!-- Centered Logo -->
-    <div class="navbar-logo position-absolute top-50 start-50 translate-middle">
+    <!-- Center Logo -->
+    <div class="navbar-logo">
       <img class="logo" src="assets/Logo.png" alt="logo" />
     </div>
 
-    <!-- Right side icons -->
+    <!-- Right -->
     <div class="d-flex align-items-center gap-3">
+      <a class="nav-item nav-link" routerLink="/sample">Sample</a>
       <a class="nav-item nav-link" routerLink="/profile">Profile</a>
       <a class="nav-item nav-link" routerLink="/cart">Cart</a>
       <button class="btn logout-btn btn-link nav-item nav-link" (click)="logout()">Logout</button>
     </div>
-
   </div>
 </nav>
 
-<!-- main app container -->
+<!-- Mobile Sidebar Nav (Only shown when collapsed) -->
+<div class="mobile-sidebar" [class.show]="isCollapsed">
+  <div class="d-flex flex-column p-3 bg-dark text-white" style="min-height: 100vh; width: 250px;">
+    <a class="nav-link text-white mb-2" routerLink="/" (click)="isCollapsed = false">Home</a>
+    <a class="nav-link text-white mb-2" routerLink="/products" (click)="isCollapsed = false">Products</a>
+    <a *ngIf="user && user.role === 'admin'" class="nav-link text-white mb-2" routerLink="/admin" (click)="isCollapsed = false">
+      <i class="fas fa-cogs"></i> Admin Panel
+    </a>
+    <a class="nav-link text-white mb-2" routerLink="/sample" (click)="isCollapsed = false">Sample</a>
+    <a class="nav-link text-white mb-2" routerLink="/profile" (click)="isCollapsed = false">Profile</a>
+    <a class="nav-link text-white mb-2" routerLink="/cart" (click)="isCollapsed = false">Cart</a>
+    <button class="btn btn-link text-white mt-3" (click)="logout(); isCollapsed = false">Logout</button>
+  </div>
+</div>
+
+<!-- Main App Content -->
 <div class="app-container" [ngClass]="{ 'bg-light': user }">
   <alert></alert>
   <router-outlet></router-outlet>

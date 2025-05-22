@@ -6,6 +6,9 @@
     transition: box-shadow 0.3s ease;
     width: 80%;
     height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .product-card:hover {
@@ -41,3 +44,37 @@ font-weight: 500;
 90% { opacity: 1; }
 100% { opacity: 0; transform: translateY(20px); }
 }
+
+/* Responsive adjustments for mobile screens */
+@media (max-width: 768px) {
+  .product-card {
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+
+  .product-image {
+    height: auto;
+    max-height: 250px;
+  }
+
+  .product-info {
+    text-align: center;
+  }
+
+  .btn {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .toast-popup {
+    right: 10px;
+    left: 10px;
+    bottom: 20px;
+    text-align: center;
+  }
+
+}
+
+

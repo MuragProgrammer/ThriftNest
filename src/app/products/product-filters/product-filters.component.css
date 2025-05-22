@@ -34,15 +34,17 @@
 
 .filter-group select,
 .filter-group input[type="range"] {
-    padding: 8px 12px;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    width: 100%;
+    max-width: 100%;                
     border-radius: 6px;
     border: 1.5px solid #ccc;
-    font-size: 1rem;
     outline-offset: 2px;
     transition: border-color 0.2s ease;
     cursor: pointer;
+    box-sizing: border-box;
 }
-
 .filter-group select:focus,
 .filter-group input[type="range"]:focus {
     border-color: #007bff;
@@ -94,3 +96,50 @@
     color: #666;
     user-select: none;
 }
+
+/* Make filter container responsive */
+@media (max-width: 768px) {
+    .product-filters {
+    max-width: 100%;
+    position: relative;
+    top: 0;
+    box-shadow: none;
+    border-radius: 0;
+    }
+}
+
+/* Vertical range slider styling */
+.vertical-range .range-wrapper {
+display: flex;
+flex-direction: row; /* Show slider and value side-by-side */
+align-items: center;
+gap: 1rem;
+}
+
+.vertical-range input[type="range"] {
+writing-mode: bt-lr; /* bottom to top for vertical slider */
+-webkit-appearance: slider-vertical;
+width: 6px;
+height: 120px;
+padding: 0;
+background: #ddd;
+border-radius: 3px;
+}
+
+.vertical-range input[type="range"]::-webkit-slider-thumb {
+width: 18px;
+height: 18px;
+}
+
+.vertical-range input[type="range"]::-moz-range-thumb {
+width: 18px;
+height: 18px;
+}
+
+.range-value {
+font-size: 0.9rem;
+color: #666;
+user-select: none;
+min-width: 90px;
+}
+

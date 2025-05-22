@@ -6,7 +6,7 @@ import { User } from '@app/_models/user';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-admin',
+  selector: 'app-admin',  
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
