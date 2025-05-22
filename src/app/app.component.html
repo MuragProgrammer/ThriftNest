@@ -50,7 +50,6 @@
     <a *ngIf="user && user.role === 'admin'" class="nav-link text-white mb-2" routerLink="/admin" (click)="isCollapsed = false">
       <i class="fas fa-cogs"></i> Admin Panel
     </a>
-    <a class="nav-link text-white mb-2" routerLink="/sample" (click)="isCollapsed = false">Sample</a>
     <a class="nav-link text-white mb-2" routerLink="/profile" (click)="isCollapsed = false">Profile</a>
     <a class="nav-link text-white mb-2" routerLink="/cart" (click)="isCollapsed = false">Cart</a>
     <button class="btn btn-link text-white mt-3" (click)="logout(); isCollapsed = false">Logout</button>
