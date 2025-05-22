@@ -1,0 +1,155 @@
+<div class="checkout-wrapper container">
+    <!-- Left Side: Form -->
+    <div class="checkout-left">
+        <div class="back-arrow">&#8592;</div>
+        <h1>CHECKOUT</h1>
+
+        <div class="step-tabs">
+        <span class="active-step">INFORMATION</span>
+        </div>
+
+        <form #checkoutForm="ngForm" class="checkout-form">
+        <h3>CONTACT INFO</h3>
+        <input
+            type="email"
+            name="email"
+            [(ngModel)]="contact.email"
+            placeholder="Email"
+            readonly
+            required
+        />
+
+        <h3>SHIPPING ADDRESS</h3>
+
+        <div class="two-column">
+            <input
+            type="text"
+            name="fullname"
+            [(ngModel)]="shipping.fullname"
+            placeholder="Full Name"
+            required
+            />
+        </div>
+
+        <select
+            name="country"
+            [(ngModel)]="shipping.country"
+            (ngModelChange)="updateShippingFee()"
+            required
+        >
+        <option *ngFor="let c of countries" [value]="c.name">
+                {{ c.name }} - ₱{{ c.shippingFee }}
+            </option>
+        </select>
+
+        <input
+            type="text"
+            name="state"
+            [(ngModel)]="shipping.state"
+            placeholder="State / Region"
+            required
+        />
+        <input
+            type="text"
+            name="address"
+            [(ngModel)]="shipping.address"
+            placeholder="Address"
+            required
+        />
+
+        <div class="two-column">
+            <input
+            type="text"
+            name="city"
+            [(ngModel)]="shipping.city"
+            placeholder="City"
+            required
+            />
+        </div>
+        <h3>PAYMENT METHOD</h3>
+
+        <div class="payment-methods">
+            <label class="payment-option">
+                <input type="radio" name="paymentMethod" [(ngModel)]="paymentMethod" value="gcash">
+                <img src="assets/icons/gcash.png" alt="GCash" class="payment-logo gcash">
+            </label>
+
+            <label class="payment-option">
+                <input type="radio" name="paymentMethod" [(ngModel)]="paymentMethod" value="paymaya">
+                <img src="assets/icons/paymaya.png" alt="PayMaya" class="payment-logo ">
+            </label>
+
+            <label class="payment-option">
+                <input type="radio" name="paymentMethod" [(ngModel)]="paymentMethod" value="cod">
+                <i class="fa fa-box payment-icon"></i>
+                Cash on Delivery
+            </label>
+        </div>
+
+        <div *ngIf="paymentMethod === 'gcash' || paymentMethod === 'paymaya'">
+            <input
+                type="tel"
+                name="paymentPhone"
+                [(ngModel)]="paymentPhone"
+                placeholder="Payment Phone Number"
+                required
+            />
+            <div *ngIf="paymentPhoneError" class="error-message">
+                {{ paymentPhoneError }}
+            </div>
+        </div>
+
+
+        <button
+            type="button"
+            class="next-button"
+            [disabled]="!checkoutForm.form.valid"
+            (click)="proceedShipping()"
+        >
+            <span>Ship for delivery</span>
+            <span>&rarr;</span>
+        </button>
+        </form>
+    </div>
+
+    <!-- Right Side: Order Summary -->
+    <div class="checkout-summary">
+        <h4>YOUR ORDER <span style="float: right;">({{ cart.length || 0}})</span></h4>
+
+        <div *ngFor="let item of cart" class="order-item">
+        <img [src]="item.image" alt="product" />
+        <div class="item-details">
+            <div class="item-title-row">
+            <span class="item-name">{{ item.name }}</span>
+            <span class="change-link">Change</span>
+            </div>
+            <div class="item-quantity">( {{ item.quantity }} )</div>
+        </div>
+        <div class="item-price">₱{{ item.price }}</div>
+        </div>
+
+        <div class="summary-pricing">
+        <div class="row">
+            <span>Subtotal</span>
+            <span>₱{{ getSubtotal() }}</span>
+        </div>
+        <div class="row">
+            <span>Shipping</span>
+            <span> ₱{{ shippingFee }}</span>
+            <ng-template #pending><span>Calculated at next step</span></ng-template>
+        </div>
+        <div class="row total">
+            <span>Total</span>
+            <span>₱{{ getSubtotal() + shippingFee }}</span>
+        </div>
+        </div>
+    </div>
+    <!-- Checkout Success Popup -->
+    <div *ngIf="showPopup" class="checkout-popup-overlay">
+    <div class="checkout-popup">
+        <h2>Thank you for your order!</h2>
+        <p>Your items are on the way.</p>
+    </div>
+    </div>
+
+</div>

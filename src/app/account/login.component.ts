@@ -1,15 +1,14 @@
 ﻿﻿import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
 
 import { AccountService, AlertService } from '@app/_services';
-
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
     form!: FormGroup;
     loading = false;
     submitted = false;
+    error = '';   // <-- add this line
 
     constructor(
         private formBuilder: FormBuilder,
@@ -17,41 +16,46 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private accountService: AccountService,
         private alertService: AlertService
-    ) { }
+    ) {}
 
     ngOnInit() {
         this.form = this.formBuilder.group({
-            username: ['', [Validators.required]],
+            username: ['', Validators.required],
             password: ['', Validators.required]
         });
     }
 
     // convenience getter for easy access to form fields
-    get f() { return this.form.controls; }
+    get f() {
+        return this.form.controls;
+    }
 
     onSubmit() {
         this.submitted = true;
-
-        // reset alerts on submit
         this.alertService.clear();
+        this.error = '';
 
-        // stop here if form is invalid
-        if (this.form.invalid) {
+        if (this.form.invalid) return;
+
+        const { username, password } = this.form.value;
+
+        // Static admin account check
+        if (username === 'admin' && password === 'admin123') {
+            this.accountService.setStaticAdmin();
+            this.router.navigate(['/admin']);
             return;
         }
 
         this.loading = true;
-        this.accountService.login(this.f.username.value, this.f.password.value)
-            .pipe(first())
+
+        // Normal user login
+        this.accountService.login(username, password)
             .subscribe({
                 next: () => {
-                    // get return url from query parameters or default to home page
-                    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-                    this.router.navigateByUrl(returnUrl);
+                    this.router.navigate(['/']);
                 },
-                error: error => {
-                    // Show error notification when username or password is incorrect
-                    alert('Invalid username or password. Please try again.');
+                error: err => {
+                    this.error = 'Invalid username or password.';
                     this.loading = false;
                 }
             });

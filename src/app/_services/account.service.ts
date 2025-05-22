@@ -1,95 +1,107 @@
-﻿
 ﻿import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
-
-
-import { environment } from '@environments/environment';
-import { User } from '@app/_models';
+import { User } from '@app/_models/user';
 
 @Injectable({ providedIn: 'root' })
 export class AccountService {
-    private userSubject: BehaviorSubject<User | null>;
-    public user: Observable<User | null>;
+  private userSubject: BehaviorSubject<User | null>;
+  public user: Observable<User | null>;
 
-    constructor(
-        private router: Router,
-        private http: HttpClient
-    ) {
-        this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('user')!));
-        this.user = this.userSubject.asObservable();
-    }
-
-    public get userValue() {
-        return this.userSubject.value;
-    }
-
-    login(username: string, password: string) {
-      return this.http.post<User>(`${environment.apiUrl}/users/authenticate`, { username, password })
-          .pipe(
-              map(user => {
-
-                  localStorage.setItem('user', JSON.stringify(user));
-                  this.userSubject.next(user);
-                  return user;
-              }),
-              catchError(error => {
-                  // Handle error here
-                  if (error.status === 401) {
-                      return throwError('Invalid username or password.');
-                  }
-                  return throwError('Something went wrong, please try again later.');
-              })
-          );
+  constructor(private router: Router) {
+    const storedUser = localStorage.getItem('currentUser');
+    this.userSubject = new BehaviorSubject<User | null>(storedUser ? JSON.parse(storedUser) : null);
+    this.user = this.userSubject.asObservable();
   }
 
-    logout() {
-        // remove user from local storage and set current user to null
-        localStorage.removeItem('user');
-        this.userSubject.next(null);
-        this.router.navigate(['/account/login']);
+  public get userValue(): User | null {
+    return this.userSubject.value;
+  }
+
+  login(username: string, password: string): Observable<boolean> {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find((u: any) => u.username === username && u.password === password);
+
+    if (user) {
+      // Set current user in localStorage & BehaviorSubject
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      this.userSubject.next(user);
+
+      return of(true);
+    } else {
+      return throwError(() => new Error('Invalid username or password'));
+    }
+  }
+  setStaticAdmin() {
+    const adminUser: User = {
+        id: 'admin_static',
+        username: 'admin',
+        role: 'admin',
+        fullName: 'Administrator',
+        email: 'admin@example.com',
+        token: 'static-admin-token'
+    };
+    localStorage.setItem('currentUser', JSON.stringify(adminUser));
+    this.userSubject.next(adminUser); // 🔥 Triggers reactivity
+  }
+
+
+
+  logout(): void {
+    localStorage.removeItem('currentUser');
+    this.userSubject.next(null);
+    this.router.navigate(['/login']);
+  }
+
+  register(user: any): Observable<any> {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const userExists = users.some((u: any) => u.username === user.username);
+
+    if (userExists) {
+      return throwError(() => new Error('Username already exists'));
     }
 
-    register(user: User) {
-        return this.http.post(`${environment.apiUrl}/users/register`, user);
-    }
+    // Generate unique ID (using timestamp + random string)
+    const uniqueId = 'user_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
 
-    getAll() {
-        return this.http.get<User[]>(`${environment.apiUrl}/users`);
-    }
+    const newUser = {
+      id: uniqueId,
+      ...user
+    };
 
-    getById(id: string) {
-        return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
-    }
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+    return of(newUser);
+  }
 
-    update(id: string, params: any) {
-        return this.http.put(`${environment.apiUrl}/users/${id}`, params)
-            .pipe(map(x => {
-                // update stored user if the logged in user updated their own record
-                if (id == this.userValue?.id) {
-                    // update local storage
-                    const user = { ...this.userValue, ...params };
-                    localStorage.setItem('user', JSON.stringify(user));
 
-                    // publish updated user to subscribers
-                    this.userSubject.next(user);
-                }
-                return x;
-            }));
-    }
+  update(id: string, updatedData: Partial<User>) {
+    let users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
+    users = users.map(user => user.id === id ? { ...user, ...updatedData } : user);
+    localStorage.setItem('users', JSON.stringify(users));
 
-    delete(id: string) {
-        return this.http.delete(`${environment.apiUrl}/users/${id}`)
-            .pipe(map(x => {
-                // auto logout if the logged in user deleted their own record
-                if (id == this.userValue?.id) {
-                    this.logout();
-                }
-                return x;
-            }));
+    if (id === this.userValue?.id) {
+      const updatedUser = { ...this.userValue, ...updatedData };
+      localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+      this.userSubject.next(updatedUser);
     }
+  }
+
+  delete(id: string) {
+    let users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
+    users = users.filter(user => user.id !== id);
+    localStorage.setItem('users', JSON.stringify(users));
+
+    if (id === this.userValue?.id) {
+      this.logout();
+    }
+  }
+
+  getAll(): User[] {
+    return JSON.parse(localStorage.getItem('users') || '[]');
+  }
+
+  getById(id: string): User | undefined {
+    return this.getAll().find(user => user.id === id);
+  }
 }

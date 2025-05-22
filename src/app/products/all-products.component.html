@@ -1,0 +1,28 @@
+    <div class="products-page container">
+
+    <div class="products-body">
+        <!-- Left Filters - 20% -->
+        <aside class="sidebar">
+        <app-product-filters (filterChange)="onFilterChange($event)"></app-product-filters>
+        </aside>
+
+        <!-- Right Section - 80% -->
+        <div class="main-content">
+
+        <!-- Top Row: Search + Blank Filter Area -->
+        <div class="top-row">
+            <div class="search-section">
+            <app-product-search (search)="onSearch($event)"></app-product-search>
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <section class="product-list">
+            <div class="product-grid">
+            <app-product-card *ngFor="let product of products" [product]="product"></app-product-card>
+            </div>
+        </section>
+
+        </div>
+    </div>
+    </div>

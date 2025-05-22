@@ -1,0 +1,42 @@
+<div class="profile-container container">
+    <!-- Left: User Info -->
+    <div class="user-info">
+        <h3>User Profile</h3>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Full Name:</strong> {{ user.fullName }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+    </div>
+    <!-- Right: Orders -->
+    <div class="order-history">
+    <h3>Order History</h3>
+        <div *ngFor="let order of orders" class="order-summary">
+            <div class="summary-header" (click)="toggleExpand(order.id!)">
+            <span><strong>Total Items:</strong> {{ getTotalItems(order.items) }}</span>
+            <span><strong>Total:</strong> ₱{{ order.totalAmount }}</span>
+            <span><strong>Date:</strong> {{ order.orderDate | date:'mediumDate' }}</span>
+            <span class="order-status" [ngClass]="order.status">{{ order.status }}</span>
+            <span class="arrow-icon">{{ expandedOrders.has(order.id!) ? '▲' : '▼' }}</span>
+            </div>
+
+            <div *ngIf="expandedOrders.has(order.id!)" class="order-details">
+            <h4>Items</h4>
+            <div *ngFor="let item of order.items" class="order-item">
+                <div>{{ item.productName }} (x{{ item.quantity }})</div>
+            </div>
+
+            <h4>Shipping Info</h4>
+            <p><strong>Name:</strong> {{ order.shipping.fullname }}</p>
+            <p><strong>Address:</strong> {{ order.shipping.address }}, {{ order.shipping.city }}, {{ order.shipping.state }}</p>
+            <p><strong>Country:</strong> {{ order.shipping.country }}</p>
+
+            <button
+            *ngIf="order.status === 'shipped'"
+            (click)="markAsDelivered(order.id!)"
+            class="btn btn-outline-dark"
+            >
+            Mark as Delivered
+            </button>
+            </div>
+        </div>
+    </div>
+</div>

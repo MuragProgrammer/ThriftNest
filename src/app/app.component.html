@@ -1,21 +1,28 @@
-﻿<!-- nav -->
-<nav class="navbar navbar-expand px-3" *ngIf="user">
-  <div class="navbar-nav w-100 d-flex align-items-center">
+﻿<nav class="navbar navbar-expand px-3 container position-relative" *ngIf="user">
+  <div class="navbar-nav w-100 d-flex align-items-center justify-content-between">
 
     <!-- Left side nav links -->
     <div class="d-flex align-items-center gap-3">
-      <img class="group-36" src="assets/group-360.svg" />
       <a class="nav-item nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-      <a class="nav-item nav-link" href="">Collections</a>
-      <a class="nav-item nav-link" href="">New</a>
+      <a class="nav-item nav-link" routerLink="/products">Products</a>
+      <a *ngIf="user.role === 'admin'" class="nav-item nav-link d-flex align-items-center gap-1" routerLink="/admin" routerLinkActive="active">
+        <i class="fas fa-cogs"></i>
+        Admin Panel
+      </a>
     </div>
-    <!-- Right side icons and logout -->
-    <div class="ms-auto d-flex align-items-center gap-3">
-      <div class="cart">
-        <a class="nav-item nav-link" href="">Cart</a>
-      </div>
+
+    <!-- Centered Logo -->
+    <div class="navbar-logo position-absolute top-50 start-50 translate-middle">
+      <img class="logo" src="assets/Logo.png" alt="logo" />
+    </div>
+
+    <!-- Right side icons -->
+    <div class="d-flex align-items-center gap-3">
+      <a class="nav-item nav-link" routerLink="/profile">Profile</a>
+      <a class="nav-item nav-link" routerLink="/cart">Cart</a>
       <button class="btn logout-btn btn-link nav-item nav-link" (click)="logout()">Logout</button>
     </div>
+
   </div>
 </nav>
 

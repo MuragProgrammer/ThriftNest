@@ -1,0 +1,22 @@
+[
+    { "id": 1, "name": "White T-Shirt", "price": 290, "currency": "PHP", "category": "Men", "image": "assets/products/tshirt1.png", "quantity": 3 },
+    { "id": 2, "name": "Semi Formal", "price": 590, "currency": "PHP", "category": "Men", "image": "assets/products/tshirt2.png", "quantity": 1 },
+    { "id": 3, "name": "White Semi Formal", "price": 450, "currency": "PHP", "category": "Men", "image": "assets/products/tshirt3.png", "quantity": 5 },
+    { "id": 4, "name": "Jeans", "price": 799, "currency": "PHP", "category": "Men", "image": "assets/products/jeans.jpg", "quantity": 2 },
+    { "id": 5, "name": "Skirt", "price": 399, "currency": "PHP", "category": "Women", "image": "assets/products/skirt.jpg", "quantity": 4 },
+    { "id": 6, "name": "Cap", "price": 199, "currency": "PHP", "category": "Unisex", "image": "assets/products/cap.jpg", "quantity": 1 },
+    { "id": 7, "name": "Sandals", "price": 350, "currency": "PHP", "category": "Women", "image": "assets/products/sandals.jpg", "quantity": 5 },
+    { "id": 8, "name": "Shorts", "price": 250, "currency": "PHP", "category": "Kids", "image": "assets/products/shorts.jpg", "quantity": 2 },
+    { "id": 9, "name": "Jacket", "price": 999, "currency": "PHP", "category": "Men", "image": "assets/products/jackets.jpg", "quantity": 3 },
+    { "id": 10, "name": "Blouse", "price": 479, "currency": "PHP", "category": "Women", "image": "assets/products/blouse.jpg", "quantity": 1 },
+    { "id": 11, "name": "Sneakers", "price": 1299, "currency": "PHP", "category": "Unisex", "image": "assets/products/sneakers.jpg", "quantity": 4 },
+    { "id": 12, "name": "Hat", "price": 180, "currency": "PHP", "category": "Men", "image": "assets/products/hat.jpg", "quantity": 2 },
+    { "id": 13, "name": "Leggings", "price": 320, "currency": "PHP", "category": "Women", "image": "assets/products/leggings.jpg", "quantity": 5 },
+    { "id": 14, "name": "Backpack", "price": 850, "currency": "PHP", "category": "Unisex", "image": "assets/products/backpack.jpg", "quantity": 1 },
+    { "id": 15, "name": "Socks", "price": 90, "currency": "PHP", "category": "Kids", "image": "assets/products/socks.jpg", "quantity": 3 },
+    { "id": 16, "name": "Hoodie", "price": 890, "currency": "PHP", "category": "Men", "image": "assets/products/hoodie.jpg", "quantity": 4 },
+    { "id": 17, "name": "Cardigan", "price": 780, "currency": "PHP", "category": "Women", "image": "assets/products/cardigan.jpg", "quantity": 2 },
+    { "id": 18, "name": "Swimwear", "price": 660, "currency": "PHP", "category": "Women", "image": "assets/products/swimwear.jpg", "quantity": 1 },
+    { "id": 19, "name": "Polo Shirt", "price": 540, "currency": "PHP", "category": "Men", "image": "assets/products/polo.jpg", "quantity": 3 },
+    { "id": 20, "name": "Raincoat", "price": 610, "currency": "PHP", "category": "Kids", "image": "assets/products/raincoat.jpg", "quantity": 2 }
+]

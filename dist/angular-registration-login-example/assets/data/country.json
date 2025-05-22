@@ -1,0 +1,52 @@
+[
+    {
+        "name": "Philippines",
+        "shippingFee": 50,
+        "phoneCode": "+63"
+    },
+    {
+        "name": "Japan",
+        "shippingFee": 75,
+        "phoneCode": "+81"
+    },
+    {
+        "name": "South Korea",
+        "shippingFee": 80,
+        "phoneCode": "+82"
+    },
+    {
+        "name": "Singapore",
+        "shippingFee": 85,
+        "phoneCode": "+65"
+    },
+    {
+        "name": "Australia",
+        "shippingFee": 90,
+        "phoneCode": "+61"
+    },
+    {
+        "name": "United Arab Emirates",
+        "shippingFee": 100,
+        "phoneCode": "+971"
+    },
+    {
+        "name": "United States",
+        "shippingFee": 110,
+        "phoneCode": "+1"
+    },
+    {
+        "name": "Canada",
+        "shippingFee": 115,
+        "phoneCode": "+1"
+    },
+    {
+        "name": "United Kingdom",
+        "shippingFee": 120,
+        "phoneCode": "+44"
+    },
+    {
+        "name": "Germany",
+        "shippingFee": 125,
+        "phoneCode": "+49"
+    }
+]

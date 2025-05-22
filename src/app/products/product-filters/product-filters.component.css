@@ -1,0 +1,96 @@
+.product-filters {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+    max-width: 280px;
+    font-weight: 500;
+    position: sticky;
+    top: 20px; /* distance from top when sticky */
+    transition: transform 0.3s ease;
+    will-change: transform;
+    z-index: 10;
+}
+
+.product-filters h5 {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    letter-spacing: 0.03em;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 8px;
+}
+
+.filter-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-group label {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.filter-group select,
+.filter-group input[type="range"] {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1.5px solid #ccc;
+    font-size: 1rem;
+    outline-offset: 2px;
+    transition: border-color 0.2s ease;
+    cursor: pointer;
+}
+
+.filter-group select:focus,
+.filter-group input[type="range"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+}
+
+.filter-group input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #ddd;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.filter-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #007bff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
+}
+
+.filter-group input[type="range"]::-webkit-slider-thumb:hover {
+    background-color: #0056b3;
+}
+
+.filter-group input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    background: #007bff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
+}
+
+.filter-group input[type="range"]::-moz-range-thumb:hover {
+    background-color: #0056b3;
+}
+
+.filter-group > div {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+    user-select: none;
+}

@@ -1,0 +1,38 @@
+<div class="cart-container container">
+    <h2>Shopping Bag</h2>
+
+    <div *ngIf="cart.length === 0" class="empty-cart">
+        <p>No items in cart.</p>
+    </div>
+
+    <div *ngIf="cart.length > 0" class="cart-items">
+        <div class="cart-item" *ngFor="let item of cart">
+        <img class="item-img" [src]="item.image" alt="{{ item.name }}" />
+        <div class="details">
+            <h4>{{ item.name }}</h4>
+            <div class="qty-controls">
+            <button (click)="decreaseQty(item)">−</button>
+            <span>{{ item.quantity }}</span>
+            <button (click)="increaseQty(item)">+</button>
+            </div>
+            <p>₱{{ item.price * item.quantity }}</p>
+            <button class="remove btn btn-outline-dark" (click)="removeItem(item.productId)">Remove</button>
+        </div>
+        </div>
+    </div>
+
+    <div *ngIf="cart.length > 0" class="cart-summary">
+        <h3>Order Summary</h3>
+        <p>Subtotal: ₱{{ getSubtotal() }}</p>
+        <p>Shipping: ₱{{ getShipping() }}</p>
+        <h4>Total: ₱{{ getTotal() }}</h4>
+
+        <label>
+        <input type="checkbox" [(ngModel)]="agreed" />
+        I agree to the Terms and Conditions
+        </label>
+        <br>
+        <br>
+        <button class="btn btn-outline-dark" [disabled]="!agreed" (click)="goToCheckout()">Continue</button>
+    </div>
+</div>

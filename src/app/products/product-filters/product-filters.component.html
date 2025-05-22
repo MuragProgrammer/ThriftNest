@@ -1,0 +1,17 @@
+<div class="product-filters" [style.transform]="'translateY(' + transformY + 'px)'">
+  <h5>Filters</h5>
+
+  <div class="filter-group">
+    <label>Category</label>
+    <select [(ngModel)]="selectedCategory" (change)="onFilterChange()">
+      <option value="">All</option>
+      <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+    </select>
+  </div>
+
+  <div class="filter-group">
+    <label>Price Range</label>
+    <input type="range" min="0" max="1500" [(ngModel)]="priceRange" (change)="onFilterChange()" />
+    <div>Up to ₱ {{ priceRange }}</div>
+  </div>
+</div>

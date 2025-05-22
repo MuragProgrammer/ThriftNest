@@ -1,5 +1,33 @@
-﻿<div class="p-4">
-    <div class="container">
-        <h1>Hi {{user?.fullName}}!</h1>
+﻿<div class="home container">
+    <!-- Hero Section -->
+    <section class="hero text-center">
+        <p class="tagline">
+            Welcome to our online thrift store — your go-to destination for stylish,sustainable fashion at unbeatable prices.
+            We curate a diverse selection of pre-loved clothing, giving each piece a second life while helping you shop guilt-free.
+            Discover unique finds, support eco-friendly choices, and redefine your wardrobe with timeless value.</p>
+        <button class=" btn btn-outline-dark" routerLink="/products">Go To Shop</button>
+    </section>
+
+    <!-- Filter Buttons -->
+    <div class="filters text-center">
+        <button class="btn btn-outline-dark" [class.active]="selectedCategory === 'All'" (click)="filterCategory('All')">All</button>
+        <button class="btn btn-outline-dark" [class.active]="selectedCategory === 'Men'" (click)="filterCategory('Men')">Men</button>
+        <button class="btn btn-outline-dark" [class.active]="selectedCategory === 'Women'" (click)="filterCategory('Women')">Women</button>
+        <button class="btn btn-outline-dark" [class.active]="selectedCategory === 'Kids'" (click)="filterCategory('Kids')">Kids</button>
+        <button class="btn btn-outline-dark" [class.active]="selectedCategory === 'Unisex'" (click)="filterCategory('Unisex')">Unisex</button>
     </div>
+
+    <!-- Product Cards -->
+    <section class="top-products" *ngIf="filteredProducts.length">
+        <h3 class="text-center">Top Picks</h3>
+        <div class="product-list">
+        <div class="product-card" *ngFor="let item of filteredProducts">
+            <img [src]="item.image" [alt]="item.name" />
+            <div class="card-content">
+            <p class="product-name">{{ item.name }}</p>
+            <p class="product-price">${{ item.price }}</p>
+            </div>
+        </div>
+        </div>
+    </section>
 </div>
